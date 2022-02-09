@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 from xmlrpc.client import Boolean
 
+# This class will be moved in another file
+
 
 class EmployeeOrder():
 
@@ -10,22 +12,23 @@ class EmployeeOrder():
         self.is_attending = is_attending
         self.order = order
 
-    def __str__(self):
-         return f'{self.name} - {self.address} - {self.is_attending} - {self.order}'
+    def __str__(self) -> str:
+        return f'{self.name} - {self.address} - {self.is_attending} - {self.order}'
 
-def readFile(file='examples/employee_orders.xml'):
+
+def read_file(file: str = 'examples/employee_orders.xml') -> str:
     with open(file, 'r') as file:
         data = file.read().replace('\n', '')
     return data
 
 
-def employees_orders(xml_file: str):
+def employees_orders(xml_file: str) -> list:
     root = ET.fromstring(xml_file)
     order_list = []
 
     for employees in root:
         name = ''
-        address = {'street':'','city':'','postal_code':''}
+        address = {'street': '', 'city': '', 'postal_code': ''}
         is_attending = False
         order = ''
         for employee in employees:
@@ -43,20 +46,14 @@ def employees_orders(xml_file: str):
                 is_attending = employee.text
             elif employee.tag == 'Order':
                 order = employee.text
-        #Create object and add it to the list
+        # Create object and add it to the list
         order_list.append(EmployeeOrder(name, address, is_attending, order))
 
     return order_list
-    
-    # name = 'Max Mustermann'
-    # address = {'street': 'Musterweg 3', 'city': 'Musterhausen', 'postal_code': '12345'}
-    # is_attending = True
-    # order = '3x Pizza Quattro Formaggi'
-    # eo = EmployeeOrder(name,address,is_attending,order)
-    # print(eo.is_attending)
 
 
-xml_orders = readFile()
-l = employees_orders(xml_orders)
-for el in l:
-    print(el)
+if __name__ == "__main__":
+    xml_orders = read_file()
+    l = employees_orders(xml_orders)
+    for el in l:
+        print(el)
