@@ -1,2 +1,2 @@
 # order_food
-Simple app to order food on behalf on my company
+Simple app that allow me to order food on behalf of my company.
