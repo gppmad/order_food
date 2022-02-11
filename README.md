@@ -13,5 +13,5 @@ cd my-app
 ## Run the application for dev use
 
 ```
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
