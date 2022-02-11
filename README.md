@@ -1,16 +1,15 @@
-# Order Food
+# Description
 Simple app that allow me to order food on behalf of my company.\
 This project is built with fast api.
 
-## Quick start 
+## Run with docker 
 
-Create a folder and make it your current working directory:
 ```
-mkdir my-app
-cd my-app 
+docker build -t order_food . 
+docker run --name order_food_container -p 80:80 order_food
 ```
 
-## Run the application for dev use
+## Run without Docker 
 
 ```
 uvicorn app.main:app --reload

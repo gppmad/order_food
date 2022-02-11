@@ -9,16 +9,15 @@ from xmlrpc.client import Boolean
 
 class Menu():
 
-    def __init__(self, menu: str):
-        self.menu_json = json.loads(menu)
-
+    def __init__(self, menu: Dict):
+        self.menu_json = menu
+        
     def find_dish_id(self, name: str):
         dishes_list = self.menu_json['dishes']
         for el in dishes_list:
             if el['name'].strip() == name.strip():
                 return el['id']
         return None
-
 
 class EmployeeOrder():
 
@@ -49,8 +48,6 @@ class EmployeeOrder():
         customer = {'full_name': self.name, 'address': self.address}
         employee_json = {'customer': customer, 'dishes': employee_dishes}
         return employee_json
-
-
 
 def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
     root = ET.fromstring(xml_file)
@@ -86,19 +83,25 @@ def read_file(file: str = 'examples/employee_orders.xml') -> str:
         data = file.read().replace('\n', '')
     return data
 
-
 def write_json(file: str = 'examples/orders.json', data=Dict):
     with open(file, 'w') as f:
         json.dump(data, f,indent=4)
 
 
 if __name__ == "__main__":
-    xml_orders = read_file()
-    menu = Menu(read_file('examples/menu.json'))
-    l = get_employees_orders(xml_orders)
-    # print(l[0].get_json_order(menu))
-    orders = []
-    for el in l:
-        orders.append(el.get_order(menu))
+    xml_orders = read_file() #fetch xml file
+    menu = None #fetch menu.json
+    try:
+        menu_file = json.loads(read_file('examples/menu.json'))
+        menu = Menu(menu_file)
+    except ValueError:
+        print("Can't parsing menu.json")
+        raise ValueError("Can't parsing menu.json")
 
-    write_json('examples/orders2.json', {'orders': orders})
+    if menu:
+        employee_orders_list = get_employees_orders(xml_orders) #parse xml
+        orders_json = []
+        for el in employee_orders_list:
+            orders_json.append(el.get_order(menu))
+
+        write_json('examples/orders2.json', {'orders': orders_json})
