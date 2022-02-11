@@ -1,0 +1,72 @@
+{
+    "orders": [
+        {
+            "customer": {
+                "full_name": "Max Mustermann",
+                "address": {
+                    "street": "Musterweg 3",
+                    "city": "Musterhausen",
+                    "postal_code": "12345"
+                }
+            },
+            "dishes": [
+                {
+                    "dish_id": 3,
+                    "amount": "3"
+                }
+            ]
+        },
+        {
+            "customer": {
+                "full_name": "Anna Nym",
+                "address": {
+                    "street": "Anonymous 4",
+                    "city": "Anon City",
+                    "postal_code": "55555"
+                }
+            },
+            "dishes": [
+                {
+                    "dish_id": 42,
+                    "amount": "1"
+                }
+            ]
+        },
+        {
+            "customer": {
+                "full_name": "Al Gore-Rhythm",
+                "address": {
+                    "street": "Fake Street 7",
+                    "city": "Downtown",
+                    "postal_code": "54321"
+                }
+            },
+            "dishes": [
+                {
+                    "dish_id": 13,
+                    "amount": "1"
+                }
+            ]
+        },
+        {
+            "customer": {
+                "full_name": "Arielle Hassle",
+                "address": {
+                    "street": "Hard Road 13",
+                    "city": "Old York",
+                    "postal_code": "98765"
+                }
+            },
+            "dishes": [
+                {
+                    "dish_id": 23,
+                    "amount": "1"
+                },
+                {
+                    "dish_id": 42,
+                    "amount": "1"
+                }
+            ]
+        }
+    ]
+}
