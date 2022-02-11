@@ -6,17 +6,20 @@ from xmlrpc.client import Boolean
 
 # This class will be moved in another file
 
+
 class Menu():
 
-    def __init__(self, menu: Dict):
-        self.menu = json.loads(menu)
+    def __init__(self, menu: str):
+        self.menu_json = json.loads(menu)
 
     def find_dish_id(self, name: str):
-        dishes_list = self.menu['dishes']
+        dishes_list = self.menu_json['dishes']
         for el in dishes_list:
             if el['name'].strip() == name.strip():
                 return el['id']
         return None
+
+
 class EmployeeOrder():
 
     def __init__(self, name: str, address: Dict, is_attending: bool, order: str) -> None:
@@ -28,30 +31,25 @@ class EmployeeOrder():
     def __str__(self) -> str:
         return f'{self.name} - {self.address} - {self.is_attending} - {self.order}'
 
-    def __get_dishes(self, menu: Type[Menu]) -> Dict:
+    def __get_dishes(self, menu: Type[Menu]) -> List[Dict]:
         str_ordered = self.order
         list_orders = [el.strip() for el in str_ordered.split(',')]
-        orders_dict = {}
+        dishes = []
         for el in list_orders:
+            order = {'dish_id': '', 'amount': ''}
             n = el[0]
             text_order = el[3::].strip()
-            orders_dict[text_order] = n
-        return orders_dict
+            order['dish_id'] = menu.find_dish_id(text_order)
+            order['amount'] = n
+            dishes.append(order)
+        return dishes
 
-    def get_json_order(self) -> Dict:
+    def get_order(self, menu: Type[Menu]) -> Dict:
+        employee_dishes = self.__get_dishes(menu)
         customer = {'full_name': self.name, 'address': self.address}
-        employee_json = {'customer': customer, 'dishes': ''}
-        employee_dishes = self.__get_dishes()
-        return employee_dishes
+        employee_json = {'customer': customer, 'dishes': employee_dishes}
+        return employee_json
 
-
-
-
-
-def read_file(file: str = 'examples/employee_orders.xml') -> str:
-    with open(file, 'r') as file:
-        data = file.read().replace('\n', '')
-    return data
 
 
 def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
@@ -83,11 +81,24 @@ def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
 
     return order_list
 
+def read_file(file: str = 'examples/employee_orders.xml') -> str:
+    with open(file, 'r') as file:
+        data = file.read().replace('\n', '')
+    return data
+
+
+def write_json(file: str = 'examples/orders.json', data=Dict):
+    with open(file, 'w') as f:
+        json.dump(data, f,indent=4)
+
 
 if __name__ == "__main__":
     xml_orders = read_file()
-    menu_json = read_file('examples/menu.json')
-    menu = Menu(menu_json)
+    menu = Menu(read_file('examples/menu.json'))
     l = get_employees_orders(xml_orders)
+    # print(l[0].get_json_order(menu))
+    orders = []
     for el in l:
-        print(el.get_json_order())
+        orders.append(el.get_order(menu))
+
+    write_json('examples/orders2.json', {'orders': orders})
