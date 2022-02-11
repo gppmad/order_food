@@ -2,9 +2,8 @@ from asyncore import read
 from typing import Dict, List, Type
 import xml.etree.ElementTree as ET
 import json
-from xmlrpc.client import Boolean
 
-# This class will be moved in another file
+from utils import read_file, write_json
 
 
 class Menu():
@@ -35,18 +34,18 @@ class EmployeeOrder():
         list_orders = [el.strip() for el in str_ordered.split(',')]
         dishes = []
         for el in list_orders:
-            order = {'dish_id': '', 'amount': ''}
+            order = {'id': '', 'amount': ''}
             n = el[0]
             text_order = el[3::].strip()
-            order['dish_id'] = menu.find_dish_id(text_order)
-            order['amount'] = n
+            order['id'] = menu.find_dish_id(text_order)
+            order['amount'] = int(n)
             dishes.append(order)
         return dishes
 
     def get_order(self, menu: Type[Menu]) -> Dict:
         employee_dishes = self.__get_dishes(menu)
-        customer = {'full_name': self.name, 'address': self.address}
-        employee_json = {'customer': customer, 'dishes': employee_dishes}
+        customer = {'name': self.name, 'address': self.address}
+        employee_json = {'customer': customer, 'items': employee_dishes}
         return employee_json
 
 def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
@@ -78,21 +77,12 @@ def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
 
     return order_list
 
-def read_file(file: str = 'examples/employee_orders.xml') -> str:
-    with open(file, 'r') as file:
-        data = file.read().replace('\n', '')
-    return data
-
-def write_json(file: str = 'examples/orders.json', data=Dict):
-    with open(file, 'w') as f:
-        json.dump(data, f,indent=4)
-
 
 if __name__ == "__main__":
     xml_orders = read_file() #fetch xml file
     menu = None #fetch menu.json
     try:
-        menu_file = json.loads(read_file('examples/menu.json'))
+        menu_file = json.loads(read_file('resources/menu.json'))
         menu = Menu(menu_file)
     except ValueError:
         print("Can't parsing menu.json")
