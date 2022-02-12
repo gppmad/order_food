@@ -2,8 +2,8 @@ from asyncore import read
 from typing import Dict, List, Type
 import xml.etree.ElementTree as ET
 import json
-
-from utils import read_file, write_json
+import sys
+# from utils import read_file, write_json
 
 
 class Menu():
@@ -69,7 +69,7 @@ def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
                     elif address_fields.tag == 'PostalCode':
                         address['postal_code'] = address_fields.text
             elif employee.tag == 'IsAttending':
-                is_attending = employee.text
+                is_attending = True if employee.text == 'true' else False
             elif employee.tag == 'Order':
                 order = employee.text
         # Create object and add it to the list
@@ -78,20 +78,20 @@ def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
     return order_list
 
 
-if __name__ == "__main__":
-    xml_orders = read_file() #fetch xml file
-    menu = None #fetch menu.json
-    try:
-        menu_file = json.loads(read_file('resources/menu.json'))
-        menu = Menu(menu_file)
-    except ValueError:
-        print("Can't parsing menu.json")
-        raise ValueError("Can't parsing menu.json")
+# if __name__ == "__main__":
+#     xml_orders = read_file('resources/employee_orders.xml') #fetch xml file
+#     menu = None #fetch menu.json
+#     try:
+#         menu_file = json.loads(read_file('resources/menu.json'))
+#         menu = Menu(menu_file)
+#     except ValueError:
+#         print("Can't parsing menu.json")
+#         raise ValueError("Can't parsing menu.json")
 
-    if menu:
-        employee_orders_list = get_employees_orders(xml_orders) #parse xml
-        orders_json = []
-        for el in employee_orders_list:
-            orders_json.append(el.get_order(menu))
-
-        write_json('examples/orders2.json', {'orders': orders_json})
+#     if menu:
+#         employee_orders_list = get_employees_orders(xml_orders) #parse xml
+#         orders_json = []
+#         for el in employee_orders_list:
+#             orders_json.append(el.get_order(menu))
+#         print(sys.path)
+#         write_json('resources/orders2.json', {'orders': orders_json})
