@@ -66,3 +66,4 @@ I followed the structure in the order.json that you provided.
 - Using Logger (I had few problems to use it inside FastAPI I need more time to check it)\
 - Improve testing with pytest
 - HTTP Connection problem inside Docker File
+- Improve code quality with [Python type hints](https://docs.python.org/3/library/typing.html)

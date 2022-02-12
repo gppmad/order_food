@@ -1,6 +1,5 @@
 import json
 from typing import Dict
-from fastapi import HTTPException
 
 def read_file(file: str) -> str:
     with open(file, 'r') as file:

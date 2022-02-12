@@ -1,4 +1,3 @@
-from typing import Optional
 from fastapi import FastAPI, Request, HTTPException
 from .xml_parsing import get_employees_orders, Menu
 from .http_reqres import get_menu, post_orders
