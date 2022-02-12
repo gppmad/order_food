@@ -1,8 +1,8 @@
 from asyncore import read
 from typing import Dict, List, Type
 import xml.etree.ElementTree as ET
-import json
-import sys
+import xmlschema
+
 # from utils import read_file, write_json
 
 
@@ -49,6 +49,13 @@ class EmployeeOrder():
         return employee_json
 
 def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
+    schema = xmlschema.XMLSchema('resources/xml_validator.xsd')
+    result = schema.is_valid(xml_file)
+
+    if result is False:
+        raise Exception('XML file not valid')
+
+
     root = ET.fromstring(xml_file)
     order_list = []
 
@@ -76,22 +83,3 @@ def get_employees_orders(xml_file: str) -> List[EmployeeOrder]:
         order_list.append(EmployeeOrder(name, address, is_attending, order))
 
     return order_list
-
-
-# if __name__ == "__main__":
-#     xml_orders = read_file('resources/employee_orders.xml') #fetch xml file
-#     menu = None #fetch menu.json
-#     try:
-#         menu_file = json.loads(read_file('resources/menu.json'))
-#         menu = Menu(menu_file)
-#     except ValueError:
-#         print("Can't parsing menu.json")
-#         raise ValueError("Can't parsing menu.json")
-
-#     if menu:
-#         employee_orders_list = get_employees_orders(xml_orders) #parse xml
-#         orders_json = []
-#         for el in employee_orders_list:
-#             orders_json.append(el.get_order(menu))
-#         print(sys.path)
-#         write_json('resources/orders2.json', {'orders': orders_json})

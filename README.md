@@ -9,6 +9,17 @@ In this project I used Python 3.8 with the latest version of fastAPI, pytest, ht
 You can find further details inside requirements.txt
 If you want to run without Docker please take a look at the section Run with Uvicorn.
 
+How to use it? Send the employee_orders XML file to {base_url}/send_xml.\
+Here an example:
+
+```
+curl -X 'POST' \
+  'http://localhost:8000/send_xml' \
+  -H 'accept: application/xml' \
+  -H 'Content-Type: application/xml' \
+  -d @employee_orders.xml
+```
+
 ## Run with docker 
 
 ```
@@ -36,6 +47,8 @@ Then
 uvicorn app.main:app --reload
 ```
 
+
+
 - - - 
 ## Problems encountered
 
@@ -48,6 +61,7 @@ uvicorn app.main:app --reload
 ----
 ## Tasks TODO:
 
+- Validate Input XML Schema
 - Using Logger (I had few problems to use it inside FastAPI I need more time to check it)\
 - Improve testing with pytest
--HTTP Connection problem inside Docker File
+- HTTP Connection problem inside Docker File

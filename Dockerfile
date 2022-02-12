@@ -2,7 +2,7 @@ FROM python:3.8
 
 WORKDIR /code
 
-EXPOSE 80
+ENV BASE_URL="http://localhost:3000"
 
 COPY ./requirements.txt /code/requirements.txt
 

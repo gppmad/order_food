@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="Employees">
+      <xs:complexType>
+         <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Employee">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Name" type="xs:string"/>
+                  <xs:element name="Address">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Street" type="xs:string"/>
+                        <xs:element name="City" type="xs:string"/>
+                        <xs:element name="PostalCode" type="xs:string"/>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="IsAttending" type="xs:boolean"/>
+                  <xs:element name="Order" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>
