@@ -1,13 +1,16 @@
-from fastapi.testclient import TestClient
 import json
 import pytest
+import respx
+import httpx
+
 from .main import app
 from .xml_parsing import Menu
 from .utils import read_file, write_json
 from .http_reqres import get_menu
+from httpx import Response
+from fastapi.testclient import TestClient
 
 client = TestClient(app)
-
 
 class TestApp:
 
@@ -29,5 +32,8 @@ class TestMenu:
        
 class TestHttpReqRes:
 
-    def t1(self):
-        pass
+    def test_t1(self):
+        my_route = respx.get("https://example.org/").mock(return_value=Response(200))
+        response = httpx.get("https://example.org/")
+        assert response.status_code == 200
+        
