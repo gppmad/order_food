@@ -2,6 +2,8 @@ FROM python:3.8
 
 WORKDIR /code
 
+ENV BASE_URL="http://localhost:3000"
+
 COPY ./requirements.txt /code/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
