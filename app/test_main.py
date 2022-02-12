@@ -8,11 +8,7 @@ from fastapi.testclient import TestClient
 client = TestClient(app)
 
 class TestApp:
-
-    def test_read_main(self):
-        response = client.get("/")
-        assert response.status_code == 200
-        assert response.json() == {"Hello": "World"}
+    pass
 
 class TestMenu:
 
