@@ -25,7 +25,7 @@ curl -X 'POST' \
 
 ```
 docker build -t order_food . 
-docker run --name order_food_container -p 80:80 -e BASE_URL="{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}" order_food
+docker run --name order_food_container -p 80:80 -e BASE_URL="http://{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}" order_food
 
 ```
 
@@ -40,7 +40,7 @@ pip install --no-cache-dir --upgrade -r requirements.txt
 Export the third part delivery company's endpoint running the following command. 
 
 ```
-export BASE_URL="{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}"
+export BASE_URL="http://{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}"
 ```
 Then, run:
 
