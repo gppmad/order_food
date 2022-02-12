@@ -1,16 +1,17 @@
 # Description
-Simple app that receive an XML file as request and make an order food based with a JSON Request to a third part delivery company.
+Simple app that receives an XML file as request and makes a food order through a HTTP JSON Request to a third part delivery company.
 
 This project is built with FAST API.
 - - - 
 ## Requirements
-In this project I used Python 3.8 with the latest version of fastAPI, pytest, httpx and uvicorn as ASGI implementation server.
+In this project I used Python 3.8 with the latest version of [fastAPI](https://fastapi.tiangolo.com/), [pytest](https://docs.pytest.org/en/7.0.x/),  [httpx](https://www.python-httpx.org/) and [uvicorn](https://www.uvicorn.org/) as ASGI implementation server.
 
-You can find further details inside requirements.txt
-If you want to run without Docker please take a look at the section Run with Uvicorn.
+You can find further details inside requirements.txt.
+
+If you want to run without Docker please take a look at the section "Run with Uvicorn".
 
 How to use it? Send the employee_orders XML file to {base_url}/send_xml.\
-Here an example:
+Here's an example:
 
 ```
 curl -X 'POST' \
@@ -29,34 +30,35 @@ docker run --name order_food_container -p 80:80 order_food
 ```
 
 ## Run with Uvicorn 
-Clone this project and cd inside the folder with a local python 3.8 virtual environment:
+Clone this project and move inside the folder with a local python 3.8 virtual environment:
 
 ```
 cd order_food
 python3 -m venv venv
 pip install --no-cache-dir --upgrade -r requirements.txt
 ```
-Export the third part delivery company endpoint running the following command. 
+Export the third part delivery company's endpoint running the following command. 
 
 ```
 export BASE_URL="nourish.me/api/v1"
 ```
-Then 
+Then, run:
 
 ```
 uvicorn app.main:app --reload
 ```
 
-
-
 - - - 
 ## Problems encountered
 
-1) There is a difference from the order.json written in your pdf and the other order.json that you provide me as file.
-    Fields: 
-        orders.customer.name (orders.customer.full_name in PDF)
-        orders.items (orders.dished in PDF)
-        orders.dishes.id (orders.dishes.dish_id)
+There are few differences between the order.json written in your pdf and the other order.json that you provide me as file.
+
+Differences:
+- orders.customer.name (orders.customer.full_name in PDF)
+- orders.items (orders.dished in PDF)
+- orders.dishes.id (orders.dishes.dish_id)
+
+I followed the structure in the order.json that you provided.
 
 ----
 ## Tasks TODO:
@@ -64,3 +66,4 @@ uvicorn app.main:app --reload
 - Using Logger (I had few problems to use it inside FastAPI I need more time to check it)\
 - Improve testing with pytest
 - HTTP Connection problem inside Docker File
+- Improve code quality with [Python type hints](https://docs.python.org/3/library/typing.html)
