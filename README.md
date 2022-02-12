@@ -25,7 +25,7 @@ curl -X 'POST' \
 
 ```
 docker build -t order_food . 
-docker run --name order_food_container -p 80:80 order_food
+docker run --name order_food_container -p 80:80 -e BASE_URL="{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}" order_food
 
 ```
 
@@ -40,7 +40,7 @@ pip install --no-cache-dir --upgrade -r requirements.txt
 Export the third part delivery company's endpoint running the following command. 
 
 ```
-export BASE_URL="nourish.me/api/v1"
+export BASE_URL="{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}"
 ```
 Then, run:
 
@@ -59,6 +59,13 @@ Differences:
 - orders.dishes.id (orders.dishes.dish_id)
 
 I followed the structure in the order.json that you provided.
+
+## Test
+Run app test with:
+
+```
+pytest -s app/test_main.py 
+```
 
 ----
 ## Tasks TODO:
