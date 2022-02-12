@@ -15,7 +15,7 @@ Here's an example:
 
 ```
 curl -X 'POST' \
-  'http://localhost:8000/send_xml' \
+  'http://{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}/send_xml' \
   -H 'accept: application/xml' \
   -H 'Content-Type: application/xml' \
   -d @employee_orders.xml
@@ -35,6 +35,7 @@ Clone this project and move inside the folder with a local python 3.8 virtual en
 ```
 cd order_food
 python3 -m venv venv
+source venv/bin/activate
 pip install --no-cache-dir --upgrade -r requirements.txt
 ```
 Export the third part delivery company's endpoint running the following command. 
@@ -72,5 +73,4 @@ pytest -s app/test_main.py
 
 - Using Logger (I had few problems to use it inside FastAPI I need more time to check it)\
 - Improve testing with pytest
-- HTTP Connection problem inside Docker File
 - Improve code quality with [Python type hints](https://docs.python.org/3/library/typing.html)
