@@ -61,7 +61,6 @@ uvicorn app.main:app --reload
 ----
 ## Tasks TODO:
 
-- Validate Input XML Schema
 - Using Logger (I had few problems to use it inside FastAPI I need more time to check it)\
 - Improve testing with pytest
 - HTTP Connection problem inside Docker File

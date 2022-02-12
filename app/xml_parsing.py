@@ -3,9 +3,6 @@ from typing import Dict, List, Type
 import xml.etree.ElementTree as ET
 import xmlschema
 
-# from utils import read_file, write_json
-
-
 class Menu():
 
     def __init__(self, menu: Dict):

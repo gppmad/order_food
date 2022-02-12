@@ -1,5 +1,4 @@
 import httpx
-import json
 import os
 
 BASE_URL = os.environ.get('BASE_URL') if os.environ.get('BASE_URL') else 'http://localhost:3000'
@@ -44,5 +43,5 @@ async def post_orders(employee_orders_list, menu):
     if response is None or response.status_code != 200:
         print(f"Problem calling send order endpoint {endpoint}")
         return None
-        
+
     return response
