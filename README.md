@@ -15,7 +15,7 @@ Here's an example:
 
 ```
 curl -X 'POST' \
-  'http://{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}/send_xml' \
+  'http://{base_url}/send_xml' \
   -H 'accept: application/xml' \
   -H 'Content-Type: application/xml' \
   -d @employee_orders.xml
