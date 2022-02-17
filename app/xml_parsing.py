@@ -1,4 +1,4 @@
-from typing import Dict, List, Type
+from typing import Dict, List, Type, Optional
 import xml.etree.ElementTree as ET
 import xmlschema
 
@@ -7,7 +7,7 @@ class Menu():
     def __init__(self, menu: Dict) -> None:
         self.menu_json = menu
         
-    def find_dish_id(self, name: str) -> Type[Dict]:
+    def find_dish_id(self, name: str) -> Optional[Type[Dict]]:
         dishes_list = self.menu_json['dishes']
         for el in dishes_list:
             if el['name'].strip() == name.strip():
