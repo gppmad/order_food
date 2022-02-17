@@ -22,14 +22,14 @@ async def post_read_root(request: Request):
 
     #Retrieving menu-json
     menu = None #fetch menu.json
-    menu_response = await get_menu()
+    menu_response = get_menu()
     if menu_response != None:
         menu = Menu(menu_response.json())
     else:
         raise HTTPException(status_code=500, detail="Problem calling get menu endpoint")
 
     #Sending order
-    orders_response = await post_orders(employee_orders_list, menu)
+    orders_response = post_orders(employee_orders_list, menu)
     if orders_response == None:
         raise HTTPException(status_code=500, detail="Timeout error calling post order endpoint (delivery company)")
     

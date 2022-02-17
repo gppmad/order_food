@@ -65,7 +65,7 @@ I followed the structure in the order.json that you provided.
 Run app test with:
 
 ```
-pytest -s app/test_main.py 
+pytest -s app/test_main.py --asyncio-mode=strict
 ```
 
 ----
