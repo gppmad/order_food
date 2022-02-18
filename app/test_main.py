@@ -1,7 +1,6 @@
-import httpx
 import respx
 import json
-import pytest
+
 
 from .main import app
 from .xml_parsing import Menu
@@ -9,20 +8,6 @@ from .utils import read_file
 from .http_reqres import BASE_URL, get_menu
 from httpx import Response
 
-
-async def call_async():
-    response = await httpx.get("https://example.org/")
-    if(response.status_code == 200):
-        return response
-    else:
-        return None
-
-@respx.mock
-async def test_async():
-    my_route = respx.get("https://example.org/").mock(return_value=Response(200))
-    response = await call_async()
-    assert my_route.called
-    assert response.status_code == 200
 
 class TestApp:
 
