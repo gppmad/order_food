@@ -1,13 +1,13 @@
-from typing import Dict, List, Type
+from typing import Dict, List, Type, Optional
 import xml.etree.ElementTree as ET
 import xmlschema
 
 class Menu():
 
-    def __init__(self, menu: Dict):
+    def __init__(self, menu: Dict) -> None:
         self.menu_json = menu
         
-    def find_dish_id(self, name: str):
+    def find_dish_id(self, name: str) -> Optional[Type[Dict]]:
         dishes_list = self.menu_json['dishes']
         for el in dishes_list:
             if el['name'].strip() == name.strip():
@@ -25,7 +25,7 @@ class EmployeeOrder():
     def __str__(self) -> str:
         return f'{self.name} - {self.address} - {self.is_attending} - {self.order}'
 
-    def __get_dishes(self, menu: Type[Menu]) -> List[Dict]:
+    def __get_dishes(self, menu: Type[Menu]) -> Type[List[Dict]]:
         str_ordered = self.order
         list_orders = [el.strip() for el in str_ordered.split(',')]
         dishes = []
@@ -38,7 +38,7 @@ class EmployeeOrder():
             dishes.append(order)
         return dishes
 
-    def get_order(self, menu: Type[Menu]) -> Dict:
+    def get_order(self, menu: Type[Menu]) -> Type[Dict]:
         employee_dishes = self.__get_dishes(menu)
         customer = {'name': self.name, 'address': self.address}
         employee_json = {'customer': customer, 'items': employee_dishes}

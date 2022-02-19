@@ -1,7 +1,8 @@
 # Description
 Simple app that receives an XML file as request and makes a food order through a HTTP JSON Request to a third part delivery company.
-
 This project is built with FAST API.
+
+![alt text](resources/order_food.png))
 - - - 
 ## Requirements
 In this project I used Python 3.8 with the latest version of [fastAPI](https://fastapi.tiangolo.com/), [pytest](https://docs.pytest.org/en/7.0.x/),  [httpx](https://www.python-httpx.org/) and [uvicorn](https://www.uvicorn.org/) as ASGI implementation server.
@@ -65,7 +66,7 @@ I followed the structure in the order.json that you provided.
 Run app test with:
 
 ```
-pytest -s app/test_main.py 
+pytest -s app/test_main.py --asyncio-mode=strict
 ```
 
 ----
