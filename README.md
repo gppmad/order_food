@@ -11,7 +11,7 @@ You can find further details inside requirements.txt.
 
 If you want to run without Docker please take a look at the section "Run with Uvicorn".
 
-How to use it? Send the employee_orders XML file to {base_url}/send_xml.\
+How to use it? Send the employee_orders XML file (example in resources folder) to {base_url}/send_xml.\
 Here's an example:
 
 ```
@@ -47,7 +47,7 @@ export BASE_URL="http://{ENDPOINT_MOCK_SERVER}:{PORT_MOCK_SERVER}"
 Then, run:
 
 ```
-uvicorn app.main:app --reload
+uvicorn app.main:app --log-config app/config/log_conf.yml
 ```
 
 - - - 
