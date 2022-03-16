@@ -1,8 +1,11 @@
 from fastapi import FastAPI, Request, HTTPException
 from .xml_parsing import get_employees_orders, Menu
 from .http_reqres import get_menu, post_orders
+import logging
 
 app = FastAPI()
+
+logger = logging.getLogger("uvicorn.error")
 
 @app.post("/send_xml")
 async def post_read_root(request: Request):
@@ -17,6 +20,7 @@ async def post_read_root(request: Request):
     
     try:
         employee_orders_list = get_employees_orders(xml_str) #parse xml
+        logger.info("Employee order xml received and parsed")
     except Exception:
         raise HTTPException(status_code=400, detail="XML is not valid")
 
@@ -34,3 +38,8 @@ async def post_read_root(request: Request):
         raise HTTPException(status_code=500, detail="Timeout error calling post order endpoint (delivery company)")
     
     return {'msg': 'order sent to the delivery company successfully'}
+
+@app.get("/test-logger")
+async def test_logger(request: Request):
+    logger.info("This is my message")
+    return "done"

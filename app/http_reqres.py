@@ -1,6 +1,8 @@
 import httpx
 import os
+import logging
 
+logger = logging.getLogger("uvicorn.error")
 BASE_URL = os.environ.get('BASE_URL', 'http://localhost:3000')
 
 def get_menu():
@@ -8,15 +10,16 @@ def get_menu():
     response = None
     try:
         response = httpx.get(endpoint)
+        logger.info(f"Menu retrivied from {BASE_URL}")
     except httpx.TimeoutException as exc:
-        print(f"Timeout calling {endpoint}")
+        logger.error(f"Timeout calling {endpoint}")
     except httpx.RequestError as exc:
-        print(f"An error occurred while requesting {exc.request.url!r}.")
+        logger.error(f"An error occurred while requesting {exc.request.url!r}.")
     except httpx.HTTPStatusError as exc:
-        print(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}.")
+        logger.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}.")
 
     if response is None or response.status_code != 200:
-        print(f"Problem calling get menu endpoint {endpoint}")
+        logger.error(f"Problem calling get menu endpoint {endpoint}")
         return None
 
     return response
@@ -33,14 +36,14 @@ def post_orders(employee_orders_list, menu):
     try:
         response = httpx.post(endpoint, json={'orders': orders_json}, headers=headers)
     except httpx.TimeoutException as exc:
-        print(f"Timeout calling {endpoint}")    
+        logger.error(f"Timeout calling {endpoint}")    
     except httpx.RequestError as exc:
-        print(f"An error occurred while requesting {exc.request.url!r}.")
+        logger.error(f"An error occurred while requesting {exc.request.url!r}.")
     except httpx.HTTPStatusError as exc:
-        print(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}.")
+        logger.error(f"Error response {exc.response.status_code} while requesting {exc.request.url!r}.")
 
     if response is None or response.status_code != 200:
-        print(f"Problem calling send order endpoint {endpoint}")
+        logger.error(f"Problem calling send order endpoint {endpoint}")
         return None
 
     return response
